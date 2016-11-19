@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        html,body {
+            overflow: hidden;
+        }
+    </style>
+
+    <script>
+        window.onload = function(){
+            function $(id){
+                return document.getElementById(id);
+            }
+            var canvas = $('canvas'),
+                ctx = canvas.getContext('2d'),
+               //获取屏幕分辨率;
+                s = window.screen,
+                w = s.width,
+                h = s.height,
+                str = "♩♪♫♬〼¤۞♯♭‖¶▬〼‖",
+                fontSize = 24,
+                cols = Math.floor(w/fontSize),
+                drops = [];
+            //初始化y的坐标:
+            for(var i=0;i<cols;i++){
+                drops.push(Math.random()*-200)
+            }
+            canvas.width = w;
+            canvas.height = h;
+
+            function draw() {
+                //过渡颜色:
+                ctx.fillStyle = "rgba(0,0,0,0.40)";
+                ctx.fillRect(0, 0, w, h);//css 中background
+                //元素颜色:
+                ctx.fillStyle = "green";
+                ctx.font = "600 " + fontSize + "px 微软雅黑";
+                for (var i = 0; i < cols; i++) {
+                    var index = Math.floor(Math.random() * str.length);
+                    var x = fontSize * i;
+                    var y = fontSize * drops[i];
+                    ctx.fillText(str[index], y, x);//ctx.fillText(str[index],x,y)
+                    if (y > canvas.width) {//;if(y>canvas.height)
+                        drops[i] = 0;
+                    } else {
+                        drops[i]++;
+                    }
+                }
+            }
+
+            setInterval(draw,100)
+        }
+    </script>
+</head>
+<body>
+    <canvas id="canvas"></canvas>
+    <audio src="mp3/2.mp3" id ="audio" autoplay loop></audio>
+</body>
+</html>
